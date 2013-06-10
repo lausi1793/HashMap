@@ -1,0 +1,69 @@
+package lausegger.hash;
+
+/**
+ * 
+ * @author Michael Lausegger
+ *
+ */
+public class HashMap {
+  private String[] data;
+	private int oldsize;
+	private int full;
+	
+	public HashMap(int size){    				// Constructor
+		oldsize = size;
+		if(size<10){
+			data = new String[11];
+		}else{
+			data = new String[size];
+		}
+	}
+	
+	public boolean isEmpty(){    				// Checks, whether the map is empty
+		if(full == 0){
+			return true;
+		}
+		return false;
+	}
+	
+	public void clear(){            	 		// Removes all mappings
+		if(oldsize<10){
+			data = new String[11];
+		}else{
+			data = new String[oldsize];
+		}
+		full = 0;
+	}
+	
+	public int size(){							// Gets the number of key/value pairs
+		return full;	
+	}
+	
+	public void put(String key, String value){	// Adds a new key/value pair
+		char c = key.charAt(0);
+		byte b = (byte)c;
+		int mod = ((int)b)%oldsize;
+		data[mod]= value;
+		full++;
+	}
+	
+	public String get(String key){    			// Gets the value for the supplied key
+		char c = key.charAt(0);
+		byte b = (byte)c;
+		int mod = ((int)b)%13;
+		return data[mod];
+	}
+}
+
+public static void main(String[] args) {
+  	
+		
+		HashMap myMap = new HashMap(13);
+		
+		myMap.put("Sepp", "113");
+		myMap.put("Hugo", "117");
+		
+		System.out.println("Number: " + myMap.get("Sepp"));
+		System.out.println("Number: " + myMap.get("Hugo"));
+	}
+
